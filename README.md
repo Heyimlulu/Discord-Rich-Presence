@@ -1,6 +1,6 @@
 # Discord-Rich-Presence
 
-Discord Rich Presence is a Rich Presence (RPC) client that show the channel, user or group you're talking to.
+Discord Rich Presence is a Rich Presence Client (RPC) that show off what users are doing with Discord's status feature
 
 Original project made by [Xanll](https://github.com/Xanll)
 
