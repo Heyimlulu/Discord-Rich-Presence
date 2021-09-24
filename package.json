@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "discord-rpc": "^3.0.0",
+    "fs": "0.0.2"
+  },
+  "name": "Discord-Rich-Presence",
+  "description": "Discord Rich Presence is a Rich Presence (RPC) client that show the channel, user or group you're talking to.",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "discord",
+    "discord",
+    "rpc",
+    "rich-presence",
+    "discord-rpc"
+  ],
+  "author": "Xanll/Heyimlulu",
+  "license": "MIT"
+}
