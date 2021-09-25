@@ -1,10 +1,9 @@
 {
   "dependencies": {
-    "discord-rpc": "^3.0.0",
-    "fs": "0.0.2"
+    "discord-rpc": "^3.0.0"
   },
   "name": "Discord-Rich-Presence",
-  "description": "Discord Rich Presence is a Rich Presence (RPC) client that show the channel, user or group you're talking to.",
+  "description": "Discord Rich Presence is a Rich Presence Client (RPC) that show off what users are doing with Discord's status feature.",
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",

@@ -1,31 +1,32 @@
-import DiscordRPC from 'discord-rpc';
+import rpc from 'discord-rpc';
+const client = new rpc.Client({ transport: 'ipc' });
 import fs from 'fs';
-// Config file
-const config = Object.assign(JSON.parse(fs.readFileSync('./example-config.json', 'utf8')), JSON.parse(fs.readFileSync('./config.json', 'utf8')));
-// App ID & RPC Client.
-const AppID = config.appid;
-const rpc = new DiscordRPC.Client({ transport: 'ipc' });
+// config.json file
+if (!fs.existsSync('./config.json')) throw new Error('\x1b[31mI could not find config.json, are you sure you have it?\x1b[0m');
+const config = Object.assign(JSON.parse(fs.readFileSync('./config.json', 'utf8')));
 
-let currentArray,
-    channel,
-    details;
+let currentArray;
 
-// Update Time.
+// Update Time
 function update() {
 
-    if (currentlyAsleep()) return setActivity({
-        details: config.rpc.sleep.details || undefined,
-        state: config.rpc.sleep.state || undefined,
-        largeImageKey: config.rpc.sleep.largeImageKey || undefined,
-        largeImageText: config.rpc.sleep.largeImageText || undefined,
-        endTimestamp: config.rpc.sleep.endTimestamp ? awakeWhen() : undefined,
-		joinSecret: config.rpc.sleep.joinButton ? true : false,
-		spectateSecret: config.rpc.sleep.spectateButton ? true : false
-    })
+    if (currentlyAsleep()) {
+        return setActivity({
+            details: config.rpc.sleep.details || undefined,
+            state: config.rpc.sleep.state || undefined,
+            largeImageKey: config.rpc.sleep.largeImageKey || undefined,
+            largeImageText: config.rpc.sleep.largeImageText || undefined,
+            endTimestamp: config.rpc.sleep.endTimestamp ? awakeWhen() : undefined,
+            joinSecret: config.rpc.sleep.joinButton ? true : false,
+            spectateSecret: config.rpc.sleep.spectateButton ? true : false
+        });
+    }
 
     setActivity({
-        details: details,
-        state: channel,
+        details: config.rpc.discord.details || undefined,
+        state: config.rpc.discord.state || undefined,
+        partySize: config.rpc.discord.partySize || undefined,
+        partyMax: config.rpc.discord.partyMax || undefined,
         startTimestamp: config.rpc.discord.startTimestamp || undefined,
         largeImageKey: config.rpc.discord.largeImageKey || undefined,
         largeImageText: config.rpc.discord.largeImageText || undefined,
@@ -36,22 +37,29 @@ function update() {
     })
 }
 
-// When Ready.
-rpc.on('ready', async () => {
-    console.log("Ready! The RPC Client Started Succesfully.")
+// When Ready
+client.on('ready', async () => {
+    console.log("\x1b[32mReady! \x1b[34mThe RPC Client Started Successfully.\x1b[0m")
 
     setInterval(() => {
-		try { update(); } catch (e) {}
-    }, config.interval * 1000);
+		try {
+		    update();
+		} catch (err) {
+		    console.log(`\x1b[31m${err}\x1b[0m`);
+        }
+    }, config.interval);
 
 });
 
 // Login.
-rpc.login({ clientId: AppID }).catch(console.error);
+client.login({
+    clientId: config.appid
+}).catch(console.error);
 
-// Adding Activity
+// Set Activity
 function setActivity(array) {
-    if (JSON.stringify(array, null, 4) == JSON.stringify(currentArray, null, 4)) return; // array == currentArray, prevents API spamming
+    // array == currentArray => prevents API spamming
+    if (JSON.stringify(array, null, 4) == JSON.stringify(currentArray, null, 4)) return;
     currentArray = array;
 
     let time = new Date();
@@ -59,42 +67,59 @@ function setActivity(array) {
     array = {
         details: array.details,
         state: array.state,
+        partySize: array.partySize,
+        partyMax: array.partyMax,
         startTimestamp: array.startTimestamp ? time : undefined,
         endTimestamp: array.endTimestamp,
         largeImageKey: array.largeImageKey,
         largeImageText: array.largeImageText,
         smallImageKey: array.smallImageKey,
         smallImageText: array.smallImageText,
-        partyId: AppID,
-        joinSecret: array.joinSecret ? AppID + "JOIN" : undefined,
-		spectateSecret: array.spectateSecret ? AppID + "SPEC" : undefined,
+        partyId: config.appid,
+        joinSecret: array.joinSecret ? config.appid + "JOIN" : undefined,
+		spectateSecret: array.spectateSecret ? config.appid + "SPEC" : undefined,
         instance: false
     }
 
-    rpc.setActivity(array)
+    client.setActivity(array)
 }
 
-// Sleep Time (Fetch)
+// Sleep Time
 function getSleepTimes() {
-    let day = (new Date().getHours() > 12 ? ((new Date().getDay() + 1) == 8 ? 1 : new Date().getDay() + 1) : new Date().getDay()) - 1;
+    // (currentHour > 12 ? ((currentDay + 1) === 8 ? 1 : currentDay + 1) : currentDay) - 1
+    //let day = (new Date().getHours() > 12 ? ((new Date().getDay() + 1) === 8 ? 1 : new Date().getDay() + 1) : new Date().getDay()) - 1;
 
-    if (config.sleepTime) return config.sleepTime[day]
-    else return null;
+    let day = 0;
+
+    if (new Date().getHours() > 12) {
+        if ((new Date().getDay() + 1) === 8) {
+            day = 1; // Back to Monday
+        } else {
+            day = (new Date().getDay() + 1); // Go to next day
+        }
+    } else {
+        day = new Date().getDay(); // Get current day
+    }
+
+    day--;
+
+    if (config.sleepTime) return config.sleepTime[day];
 }
 
-// Sleep Time Update.
+// Sleep Time Update
 function currentlyAsleep() {
     let sleepTimes = getSleepTimes();
 
-    if (!sleepTimes) return false; // the user don't want the sleep module
+    if (!sleepTimes) return false; // User didn't set their sleep schedules
 
     if (new Date().getHours() < sleepTimes[1] || new Date().getHours() >= sleepTimes[0]) {
-        return true;
+        return true; // Enable sleep mode
+    } else {
+        return false; // Disable sleep mode
     }
-    return false;
 }
 
-// When Awake.
+// When Awake
 function awakeWhen() {
     let time = new Date();
     let awakeTime = new Date();
