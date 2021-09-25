@@ -26,8 +26,8 @@ You can also double click on `start.bat` to run this project in Windows CMD
 
 - `appid` The application ID. `string`
 - `interval` Delay in milliseconds it will update. `number`
-- `details` Description of the Rich Presence. `string`
-- `state` Title of the Rich Presence. `string`
+- `details` What the user is currently doing (Description). `string`
+- `state` The user's current status (Title). `string`
 - `partySize` Current size of the user's party. `number`
 - `partyMax` Maximum size of the user's party. `number`
 - `startTimestamp` Epoch seconds for status start. `true/false`
