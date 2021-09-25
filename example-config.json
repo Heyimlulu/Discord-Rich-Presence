@@ -1,26 +1,25 @@
 {
-    "appid": "12345678901234567",
-    "interval": 0.5,
+    "appid": "",
+    "interval": 5000,
     "rpc": {
         "discord": {
-            "details": {
-                "group": "Chatting to group",
-                "channel": "Chatting in channel",
-                "user": "Chating to user"
-            },
+            "details": "",
+            "state": "",
+            "partySize": 1,
+            "partyMax": 10,
             "startTimestamp": true,
-            "largeImageKey": "canary",
-            "largeImageText": "DiscordCanary.exe",
-            "smallImageKey": false,
-            "smallImageText": false,
+            "largeImageKey": "",
+            "largeImageText": "",
+            "smallImageKey": "",
+            "smallImageText": "",
             "joinButton": false,
             "spectateButton": false
         },
         "sleep": {
-            "details": "Currently sleeping.",
-            "state": "Bed is full",
-            "largeImageKey": "person",
-            "largeImageText": "Dis' me.",
+            "details": "",
+            "state": "",
+            "largeImageKey": "",
+            "largeImageText": "",
             "endTimestamp": true,
             "joinButton": false,
             "spectateButton": true
