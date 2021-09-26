@@ -24,21 +24,45 @@ You can also double click on `start.bat` to run this project in Windows CMD
 
 ## Configuration
 
-- `appid` The application ID. `string`
-- `interval` Delay in milliseconds it will update. `number`
-- `details` What the user is currently doing (Description). `string`
-- `state` The user's current status (Title). `string`
-- `partySize` Current size of the user's party. `number`
-- `partyMax` Maximum size of the user's party. `number`
-- `startTimestamp` Epoch seconds for status start. `true/false`
-- `endTimestamp` Epoch seconds for status end. `true/false`
-- `largeImageKey` Name of the large image you want. `string`
-- `largeImageText` Text you want to show when hovering over the large image `string`
-- `smallImageKey` Name of the small image you want. `string`
-- `smallImageText` Text you want to show when hovering over the small image. `string`
-- `joinButton` Display a "Ask to Join"-button that's greyed out (since it's not a game). `true/false`
-- `spectateButton` Same as above, just as a "Spectate"-button. `true/false`
-- `sleepTime` Your sleep schedule. (See #Sleep Times)
+### General
+
+| Parameters | Description | Type |
+| :------: | :------: | :-------: |
+| appid | The application ID | string |
+| interval | Delay in milliseconds | number |
+| sleepTime | Your sleep schedule. (See #Sleep Times) | array |
+
+----
+
+### Discord
+
+| Parameters | Description | Type |
+| :------: | :------: | :-------: |
+| details | What the user is currently doing (Description) | string |
+| state | The user's current status (Title) | string |
+| partySize | Current size of the user's party | number |
+| partyMax | Maximum size of the user's party | number |
+| startTimestamp | Epoch seconds for status start | boolean |
+| largeImageKey | Name of the large image you want | string |
+| largeImageText | Text you want to show when hovering over the large image | string |
+| smallImageKey |  Name of the small image you want | string |
+| smallImageText | Text you want to show when hovering over the small image | string |
+| joinButton | Display a "Ask to Join" button | boolean |
+| spectateButton | Display a "Spectate" button | boolean |
+
+----
+
+### SleepTime
+
+| Parameters | Description | Type |
+| :------: | :------: | :-------: |
+| details | What the user is currently doing (Description) | string |
+| state | The user's current status (Title) | string |
+| endTimestamp | Epoch seconds for status end | boolean |
+| largeImageKey | Name of the large image you want | string |
+| largeImageText | Text you want to show when hovering over the large image | string |
+| joinButton | Display a "Ask to Join" button | boolean |
+| spectateButton | Display a "Spectate" button | boolean |
 
 ## Sleep Times
 
