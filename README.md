@@ -38,8 +38,8 @@ You can also double click on `start.bat` to run this project in Windows CMD
 
 | Parameters | Description | Type |
 | :------: | :------: | :-------: |
-| details | What the user is currently doing (Description) | string |
-| state | The user's current status (Title) | string |
+| details | What the user is currently doing | string |
+| state | The user's current state "I.E., In a group" | string |
 | partySize | Current size of the user's party | number |
 | partyMax | Maximum size of the user's party | number |
 | startTimestamp | Epoch seconds for status start | boolean |
@@ -56,8 +56,10 @@ You can also double click on `start.bat` to run this project in Windows CMD
 
 | Parameters | Description | Type |
 | :------: | :------: | :-------: |
-| details | What the user is currently doing (Description) | string |
-| state | The user's current status (Title) | string |
+| details | What the user is currently doing | string |
+| state | The user's current state "I.E., In a group" | string |
+| partySize | Current size of the user's party | number |
+| partyMax | Maximum size of the user's party | number |
 | endTimestamp | Epoch seconds for status end | boolean |
 | largeImageKey | Name of the large image you want | string |
 | largeImageText | Text you want to show when hovering over the large image | string |
