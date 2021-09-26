@@ -16,6 +16,8 @@ function update() {
         return setActivity({
             details: config.rpc.sleep.details || undefined,
             state: config.rpc.sleep.state || undefined,
+            partySize: config.rpc.sleep.partySize || undefined,
+            partyMax: config.rpc.sleep.partyMax || undefined,
             largeImageKey: config.rpc.sleep.largeImageKey || undefined,
             largeImageText: config.rpc.sleep.largeImageText || undefined,
             endTimestamp: config.rpc.sleep.endTimestamp ? awakeWhen() : undefined,
