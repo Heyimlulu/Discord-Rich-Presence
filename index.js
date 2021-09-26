@@ -7,10 +7,12 @@ const config = Object.assign(JSON.parse(fs.readFileSync('./config.json', 'utf8')
 
 let currentArray;
 
-// Update Time
+// Update activity status
 function update() {
 
+    // IF => User is sleeping
     if (currentlyAsleep()) {
+        // Set sleeping status
         return setActivity({
             details: config.rpc.sleep.details || undefined,
             state: config.rpc.sleep.state || undefined,
@@ -22,6 +24,7 @@ function update() {
         });
     }
 
+    // Default => User is not sleeping
     setActivity({
         details: config.rpc.discord.details || undefined,
         state: config.rpc.discord.state || undefined,
@@ -37,7 +40,7 @@ function update() {
     })
 }
 
-// When Ready
+// When everything ready
 client.on('ready', async () => {
     console.log("\x1b[32mReady! \x1b[34mThe RPC Client Started Successfully.\x1b[0m")
 
@@ -51,12 +54,12 @@ client.on('ready', async () => {
 
 });
 
-// Login.
+// Client login
 client.login({
     clientId: config.appid
 }).catch(console.error);
 
-// Set Activity
+// Set Activity => Set current activity for the user
 function setActivity(array) {
     // array == currentArray => prevents API spamming
     if (JSON.stringify(array, null, 4) == JSON.stringify(currentArray, null, 4)) return;
@@ -84,7 +87,7 @@ function setActivity(array) {
     client.setActivity(array)
 }
 
-// Sleep Time
+// Sleep Time => Return the current day [Number]
 function getSleepTimes() {
     // (currentHour > 12 ? ((currentDay + 1) === 8 ? 1 : currentDay + 1) : currentDay) - 1
     //let day = (new Date().getHours() > 12 ? ((new Date().getDay() + 1) === 8 ? 1 : new Date().getDay() + 1) : new Date().getDay()) - 1;
@@ -106,11 +109,12 @@ function getSleepTimes() {
     if (config.sleepTime) return config.sleepTime[day];
 }
 
-// Sleep Time Update
+// Sleep Time Update => Return true or false [Boolean]
 function currentlyAsleep() {
     let sleepTimes = getSleepTimes();
 
-    if (!sleepTimes) return false; // User didn't set their sleep schedules
+    // User didn't set their sleep schedules
+    if (!sleepTimes) return false;
 
     if (new Date().getHours() < sleepTimes[1] || new Date().getHours() >= sleepTimes[0]) {
         return true; // Enable sleep mode
@@ -119,7 +123,7 @@ function currentlyAsleep() {
     }
 }
 
-// When Awake
+// When Awake => Return when user is waking up [Date]
 function awakeWhen() {
     let time = new Date();
     let awakeTime = new Date();
