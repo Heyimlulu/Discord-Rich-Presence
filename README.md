@@ -28,7 +28,7 @@ You can also double click on `start.bat` to run this project in Windows CMD
 
 | Parameters | Description | Type |
 | :------: | :------: | :-------: |
-| appid | The application ID | string |
+| appid | The application ID | number |
 | interval | Delay in milliseconds | number |
 | sleepTime | Your sleep schedule. (See #Sleep Times) | array |
 
