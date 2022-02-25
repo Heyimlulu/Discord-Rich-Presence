@@ -1,14 +1,11 @@
 {
-  "dependencies": {
-    "discord-rpc": "^3.0.0"
-  },
   "name": "Discord-Rich-Presence",
   "description": "Discord Rich Presence is a Rich Presence Client (RPC) that show off what users are doing with Discord's status feature.",
   "version": "1.0.0",
   "main": "index.js",
+  "bin": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
   "keywords": [
@@ -19,5 +16,8 @@
     "discord-rpc"
   ],
   "author": "Xanll/Heyimlulu",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "discord-rpc": "^3.0.0"
+  }
 }

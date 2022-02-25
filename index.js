@@ -91,9 +91,6 @@ function setActivity(array) {
 
 // Sleep Time => Return the current day [Number]
 function getSleepTimes() {
-    // (currentHour > 12 ? ((currentDay + 1) === 8 ? 1 : currentDay + 1) : currentDay) - 1
-    //let day = (new Date().getHours() > 12 ? ((new Date().getDay() + 1) === 8 ? 1 : new Date().getDay() + 1) : new Date().getDay()) - 1;
-
     let day = 0;
 
     if (new Date().getHours() > 12) {

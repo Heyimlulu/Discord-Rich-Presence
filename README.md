@@ -7,7 +7,7 @@ Original project made by [Xanll](https://github.com/Xanll)
 ## Getting Started
 
 1. Fork or download this project
-2. Go to the [Applications](https://discordapp.com/developers/applications/) page and create a new application. 
+2. Go to the [Applications](https://discordapp.com/developers/applications/) page and create a new application.
    1. The name should be whatever you want to be for the status, I.E. "Playing with my friends"
 3. Now go to the `Rich Presence` tab > `Art Assets`
    1. Add images you would like to be displayed on the RPC. Make sure to give them names
@@ -26,73 +26,77 @@ You can also double click on `start.bat` to run this project in Windows CMD
 
 ### General
 
-| Parameters | Description | Type |
-| :------: | :------: | :-------: |
-| appid | The application ID | number |
-| interval | Delay in milliseconds | number |
-| sleepTime | Your sleep schedule. (See #Sleep Times) | array |
+| Parameters |               Description               |  Type  |
+| :--------: | :-------------------------------------: | :----: |
+|   appid    |           The application ID            | number |
+|  interval  |          Delay in milliseconds          | number |
+| sleepTime  | Your sleep schedule. (See #Sleep Times) | array  |
 
-----
+---
 
 ### Discord
 
-| Parameters | Description | Type |
-| :------: | :------: | :-------: |
-| details | What the user is currently doing | string |
-| state | The user's current state "I.E., In a group" | string |
-| partySize | Current size of the user's party | number |
-| partyMax | Maximum size of the user's party | number |
-| startTimestamp | Epoch seconds for status start | boolean |
-| largeImageKey | Name of the large image you want | string |
-| largeImageText | Text you want to show when hovering over the large image | string |
-| smallImageKey |  Name of the small image you want | string |
-| smallImageText | Text you want to show when hovering over the small image | string |
-| joinButton | Display a "Ask to Join" button | boolean |
-| spectateButton | Display a "Spectate" button | boolean |
+|   Parameters   |                       Description                        |  Type   |
+| :------------: | :------------------------------------------------------: | :-----: |
+|    details     |             What the user is currently doing             | string  |
+|     state      |       The user's current state "I.E., In a group"        | string  |
+|   partySize    |             Current size of the user's party             | number  |
+|    partyMax    |             Maximum size of the user's party             | number  |
+| startTimestamp |              Epoch seconds for status start              | boolean |
+| largeImageKey  |             Name of the large image you want             | string  |
+| largeImageText | Text you want to show when hovering over the large image | string  |
+| smallImageKey  |             Name of the small image you want             | string  |
+| smallImageText | Text you want to show when hovering over the small image | string  |
+|   joinButton   |              Display a "Ask to Join" button              | boolean |
+| spectateButton |               Display a "Spectate" button                | boolean |
 
-----
+---
 
 ### SleepTime
 
-| Parameters | Description | Type |
-| :------: | :------: | :-------: |
-| details | What the user is currently doing | string |
-| state | The user's current state "I.E., In a group" | string |
-| partySize | Current size of the user's party | number |
-| partyMax | Maximum size of the user's party | number |
-| endTimestamp | Epoch seconds for status end | boolean |
-| largeImageKey | Name of the large image you want | string |
-| largeImageText | Text you want to show when hovering over the large image | string |
-| joinButton | Display a "Ask to Join" button | boolean |
-| spectateButton | Display a "Spectate" button | boolean |
+|   Parameters   |                       Description                        |  Type   |
+| :------------: | :------------------------------------------------------: | :-----: |
+|    details     |             What the user is currently doing             | string  |
+|     state      |       The user's current state "I.E., In a group"        | string  |
+|   partySize    |             Current size of the user's party             | number  |
+|    partyMax    |             Maximum size of the user's party             | number  |
+|  endTimestamp  |               Epoch seconds for status end               | boolean |
+| largeImageKey  |             Name of the large image you want             | string  |
+| largeImageText | Text you want to show when hovering over the large image | string  |
+|   joinButton   |              Display a "Ask to Join" button              | boolean |
+| spectateButton |               Display a "Spectate" button                | boolean |
+
+## Preview
+
+![](docs/Graphical_representation_of_the_legend_for_rich_presence_details.png)
 
 ## Sleep Times
 
-Each array has his own day, first is Monday and last is Sunday
+Each array has his own day, first is Sunday and last is Saturday
 
-```
+```json
 "sleepTime": [
-        [ 22, 7  ], <= Monday
+        [ 23, 10  ], // <= Sunday
         [ 22, 7  ],
         [ 22, 7  ],
         [ 22, 7  ],
         [ 22, 7  ],
-        [ 23, 10 ],
-        [ 23, 10 ]  <= Sunday
+        [ 22, 7 ],
+        [ 23, 10 ] // <= Saturday
     ]
 ```
 
 ### I.E. My sleep schedule
 
-| Days | Sleep time | Wake up time | 
-| :----: | :----: | :----: |
-| Monday | 22 PM | 7 AM |
-| Tuesday | 22 PM | 7 AM |
-| Wednesday | 22 PM | 7 AM |
-| Thursday | 22 PM | 7 AM |
-| Friday | 22 PM | 7 AM |
-| Saturday | 23 PM | 10 AM |
-| Sunday | 23 PM | 10 AM |
+|   Days    | Sleep time | Wake up time |
+| :-------: | :--------: | :----------: |
+|  Monday   |   22 PM    |     7 AM     |
+|  Tuesday  |   22 PM    |     7 AM     |
+| Wednesday |   22 PM    |     7 AM     |
+| Thursday  |   22 PM    |     7 AM     |
+|  Friday   |   22 PM    |     7 AM     |
+| Saturday  |   23 PM    |    10 AM     |
+|  Sunday   |   23 PM    |    10 AM     |
 
 # Aknowledgments
 
