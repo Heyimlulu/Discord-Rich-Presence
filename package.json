@@ -18,6 +18,7 @@
   "author": "Xanll/Heyimlulu",
   "license": "MIT",
   "dependencies": {
-    "discord-rpc": "^3.0.0"
+    "discord-rpc": "^3.0.0",
+    "inquirer": "^8.2.0"
   }
 }

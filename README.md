@@ -11,7 +11,8 @@ Original project made by [Xanll](https://github.com/Xanll)
    1. The name should be whatever you want to be for the status, I.E. "Playing with my friends"
 3. Now go to the `Rich Presence` tab > `Art Assets`
    1. Add images you would like to be displayed on the RPC. Make sure to give them names
-4. Rename `example-config.json` to `config.json`
+4. Rename `example-config.json` to a proper name and move your new config file in the `config` folder
+   1. You can have as many configs as you want
 5. Edit the properties you need (See #Configuration)
 
 ## Running

@@ -1,11 +1,51 @@
 import rpc from 'discord-rpc';
 const client = new rpc.Client({ transport: 'ipc' });
+import inquirer from 'inquirer';
 import fs from 'fs';
+import path from 'path';
 // config.json file
-if (!fs.existsSync('./config.json')) throw new Error('\x1b[31mI could not find config.json, are you sure you have it?\x1b[0m');
-const config = Object.assign(JSON.parse(fs.readFileSync('./config.json', 'utf8')));
+let config;
+fs.readdir('./config', (err, files) => {
+    if (!files.length) throw new Error('\x1b[31mI could not find JSON config files, are you sure you have it?\x1b[0m');
+});
 
-let currentArray;
+const configFile = fs.readdirSync('./config').filter(file => path.extname(file) === '.json');
+const choices = [];
+configFile.forEach(file => {
+    choices.push(file);
+});
+
+// Prompt the user to select a config file
+inquirer.prompt([
+    {
+        type: 'list',
+        name: 'config',
+        message: 'Select your config file',
+        choices: choices,
+    },
+]).then(selection => {
+    console.info('Answer:', selection.config);
+
+    config = Object.assign(JSON.parse(fs.readFileSync(path.join('config', selection.config), 'utf8')));
+
+    console.log("\x1b[32mReady! \x1b[34mThe RPC Client Started Successfully.\x1b[0m")
+}).then(() => {
+    // Client login
+    client.login({
+        clientId: config.appid
+    }).catch(console.error);
+});
+
+// When everything ready
+client.on('ready', async () => {
+    setInterval(() => {
+        try {
+            update();
+        } catch (err) {
+            console.log(`\x1b[31m${err}\x1b[0m`);
+        }
+    }, config.interval);
+});
 
 // Update activity status
 function update() {
@@ -42,28 +82,10 @@ function update() {
     })
 }
 
-// When everything ready
-client.on('ready', async () => {
-    console.log("\x1b[32mReady! \x1b[34mThe RPC Client Started Successfully.\x1b[0m")
-
-    setInterval(() => {
-		try {
-		    update();
-		} catch (err) {
-		    console.log(`\x1b[31m${err}\x1b[0m`);
-        }
-    }, config.interval);
-
-});
-
-// Client login
-client.login({
-    clientId: config.appid
-}).catch(console.error);
-
 // Set Activity => Set current activity for the user
 function setActivity(array) {
     // array == currentArray => prevents API spamming
+    let currentArray;
     if (JSON.stringify(array, null, 4) == JSON.stringify(currentArray, null, 4)) return;
     currentArray = array;
 
