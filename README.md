@@ -17,8 +17,10 @@ Original project made by [Xanll](https://github.com/Xanll)
 
 ## Running
 
-```
-node index.js or npm start
+```sh
+node index.js
+# or
+npm start
 ```
 
 You can also double click on `start.bat` to run this project in Windows CMD
