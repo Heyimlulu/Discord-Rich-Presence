@@ -3,17 +3,14 @@ const client = new rpc.Client({ transport: 'ipc' });
 import inquirer from 'inquirer';
 import fs from 'fs';
 import path from 'path';
-// config.json file
-let config;
-fs.readdir('./config', (err, files) => {
-    if (!files.length) throw new Error('\x1b[31mI could not find JSON config files, are you sure you have it?\x1b[0m');
-});
 
-const configFile = fs.readdirSync('./config').filter(file => path.extname(file) === '.json');
-const choices = [];
-configFile.forEach(file => {
-    choices.push(file);
-});
+// Configuration files
+let config;
+const dir = fs.readdirSync('./config').filter(file => path.extname(file) === '.json');
+if (!dir.length) throw new Error('\x1b[31mI could not find any JSON configuration files, are you sure you have it?\x1b[0m');
+
+const selection = [];
+dir.forEach(file => selection.push(file));
 
 // Prompt the user to select a config file
 inquirer.prompt([
@@ -21,11 +18,9 @@ inquirer.prompt([
         type: 'list',
         name: 'config',
         message: 'Select your config file',
-        choices: choices,
+        choices: selection,
     },
 ]).then(selection => {
-    console.info('Answer:', selection.config);
-
     config = Object.assign(JSON.parse(fs.readFileSync(path.join('config', selection.config), 'utf8')));
 
     console.log("\x1b[32mReady! \x1b[34mThe RPC Client Started Successfully.\x1b[0m")
