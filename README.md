@@ -77,7 +77,7 @@ You can also double click on `start.bat` to run this project in Windows CMD
 
 Each array has his own day, first is Sunday and last is Saturday
 
-```json
+```jsonc
 "sleepTime": [
         [ 23, 10  ], // <= Sunday
         [ 22, 7  ],
