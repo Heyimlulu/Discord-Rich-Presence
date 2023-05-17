@@ -1,0 +1,45 @@
+{
+  "appid": "467801277213179914",
+  "interval": 1000,
+  "rpc": {
+    "discord": {
+      "details": "Cute and Adorable",
+      "state": "Nya",
+      "partySize": 1,
+      "partyMax": 1,
+      "startTimestamp": false,
+      "largeImageKey": "https://media.tenor.com/WM0vXcD40IcAAAAC/anime-bocchi.gif",
+      "largeImageText": "Nu nu nu",
+      "smallImageKey": "https://i.redd.it/nbjhon1dgg571.gif",
+      "smallImageText": "Nyaaaaa",
+      "joinButton": {
+        "enabled": true,
+        "label": "My Discord Bot UwU",
+        "url": "https://anyachan.xyz"
+      },
+      "spectateButton": {
+        "enabled": true,
+        "label": "TOP 10 HACKS FOR VRCHAT!!!",
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUXbmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXA%3D"
+      }
+    },
+    "sleep": {
+      "details": "",
+      "state": "",
+      "largeImageKey": "",
+      "largeImageText": "",
+      "endTimestamp": true,
+      "joinButton": false,
+      "spectateButton": true
+    }
+  },
+  "sleepTime": [
+    [ 22, 7  ],
+    [ 22, 7  ],
+    [ 22, 7  ],
+    [ 22, 7  ],
+    [ 22, 7  ],
+    [ 23, 10 ],
+    [ 23, 10 ]
+  ]
+}

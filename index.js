@@ -1,151 +1,131 @@
 import rpc from 'discord-rpc';
-const client = new rpc.Client({ transport: 'ipc' });
 import inquirer from 'inquirer';
 import fs from 'fs';
 import path from 'path';
 
+const client = new rpc.Client({ transport: 'ipc' });
+
 // Configuration files
-let config;
-const dir = fs.readdirSync('./config').filter(file => path.extname(file) === '.json');
-if (!dir.length) throw new Error('\x1b[31mI could not find any JSON configuration files, are you sure you have it?\x1b[0m');
+let config = null;
+const configDir = './config';
+const files = fs.readdirSync(configDir).filter(file => path.extname(file) === '.json');
+if (files.length === 0) {
+    throw new Error('\x1b[31mI could not find any JSON configuration files. Please make sure you have them.\x1b[0m');
+}
 
-const selection = [];
-dir.forEach(file => selection.push(file));
-
-// Prompt the user to select a config file
+// Prompt for config file
+const choices = files.map(file => ({ name: file }));
 inquirer.prompt([
     {
         type: 'list',
         name: 'config',
         message: 'Select your config file',
-        choices: selection,
+        choices: choices,
     },
-]).then(selection => {
-    config = Object.assign(JSON.parse(fs.readFileSync(path.join('config', selection.config), 'utf8')));
+]).then(answers => {
+    const selectedConfig = answers.config;
+    const configFile = path.join(configDir, selectedConfig);
+    config = JSON.parse(fs.readFileSync(configFile, 'utf8'));
 
-    console.log("\x1b[32mReady! \x1b[34mThe RPC Client Started Successfully.\x1b[0m")
-}).then(() => {
-    // Client login
+    console.log("\x1b[32mReady! \x1b[34mThe RPC Client Started Successfully.\x1b[0m");
     client.login({
         clientId: config.appid
     }).catch(console.error);
 });
 
-// When everything ready
+// When everything is ready
 client.on('ready', async () => {
-    setInterval(() => {
-        try {
-            update();
-        } catch (err) {
-            console.log(`\x1b[31m${err}\x1b[0m`);
-        }
-    }, config.interval);
+    setActivity(config.rpc.discord);
+    console.log("\x1b[32mReady! \x1b[34mThe RPC Client Started Successfully.\x1b[0m");
 });
 
 // Update activity status
-function update() {
+function updateActivity() {
+    /*
+    if (isCurrentlyAsleep()) {
+        setActivity(config.rpc.sleep);
+    } else {
+        setActivity(config.rpc.discord);
+    }
 
-    // IF => User is sleeping
-    if (currentlyAsleep()) {
-        // Set sleeping status
-        return setActivity({
-            details: config.rpc.sleep.details || undefined,
-            state: config.rpc.sleep.state || undefined,
-            partySize: config.rpc.sleep.partySize || undefined,
-            partyMax: config.rpc.sleep.partyMax || undefined,
-            largeImageKey: config.rpc.sleep.largeImageKey || undefined,
-            largeImageText: config.rpc.sleep.largeImageText || undefined,
-            endTimestamp: config.rpc.sleep.endTimestamp ? awakeWhen() : undefined,
-            joinSecret: config.rpc.sleep.joinButton ? true : false,
-            spectateSecret: config.rpc.sleep.spectateButton ? true : false
+     */
+
+    setActivity(config.rpc.discord);
+
+    const interval = config.interval || 5000; // Default interval of 5 seconds
+
+    setTimeout(updateActivity, interval);
+}
+
+// Set activity => Set current activity for the user
+function setActivity(activityConfig) {
+    const activity = {
+        details: activityConfig.details || undefined,
+        state: activityConfig.state || undefined,
+        partySize: activityConfig.partySize || undefined,
+        partyMax: activityConfig.partyMax || undefined,
+        startTimestamp: activityConfig.startTimestamp || undefined,
+        endTimestamp: activityConfig.endTimestamp || undefined,
+        largeImageKey: activityConfig.largeImageKey || undefined,
+        largeImageText: activityConfig.largeImageText || undefined,
+        smallImageKey: activityConfig.smallImageKey || undefined,
+        smallImageText: activityConfig.smallImageText || undefined,
+        instance: false,
+        buttons: []
+    };
+
+    if (activityConfig.joinButton.enabled) {
+        activity.buttons.push({
+            label: activityConfig.joinButton.label,
+            url: activityConfig.joinButton.url
         });
     }
 
-    // Default => User is not sleeping
-    setActivity({
-        details: config.rpc.discord.details || undefined,
-        state: config.rpc.discord.state || undefined,
-        partySize: config.rpc.discord.partySize || undefined,
-        partyMax: config.rpc.discord.partyMax || undefined,
-        startTimestamp: config.rpc.discord.startTimestamp || undefined,
-        largeImageKey: config.rpc.discord.largeImageKey || undefined,
-        largeImageText: config.rpc.discord.largeImageText || undefined,
-        smallImageKey: config.rpc.discord.smallImageKey || undefined,
-        smallImageText: config.rpc.discord.smallImageText || undefined,
-        joinSecret: config.rpc.discord.joinButton || undefined,
-        spectateSecret: config.rpc.discord.spectateButton || undefined
-    })
-}
-
-// Set Activity => Set current activity for the user
-function setActivity(array) {
-    // array == currentArray => prevents API spamming
-    let currentArray;
-    if (JSON.stringify(array, null, 4) == JSON.stringify(currentArray, null, 4)) return;
-    currentArray = array;
-
-    let time = new Date();
-
-    array = {
-        details: array.details,
-        state: array.state,
-        partySize: array.partySize,
-        partyMax: array.partyMax,
-        startTimestamp: array.startTimestamp ? time : undefined,
-        endTimestamp: array.endTimestamp,
-        largeImageKey: array.largeImageKey,
-        largeImageText: array.largeImageText,
-        smallImageKey: array.smallImageKey,
-        smallImageText: array.smallImageText,
-        partyId: config.appid,
-        joinSecret: array.joinSecret ? config.appid + "JOIN" : undefined,
-		spectateSecret: array.spectateSecret ? config.appid + "SPEC" : undefined,
-        instance: false
+    if (activityConfig.spectateButton.enabled) {
+        activity.buttons.push({
+            label: activityConfig.spectateButton.label,
+            url: activityConfig.spectateButton.url
+        });
     }
 
-    client.setActivity(array)
+    client.setActivity(activity);
 }
 
 // Sleep Time => Return the current day [Number]
 function getSleepTimes() {
     let day = 0;
+    const currentHour = new Date().getHours();
 
-    if (new Date().getHours() > 12) {
-        if ((new Date().getDay() + 1) === 8) {
-            day = 1; // Back to Monday
-        } else {
-            day = (new Date().getDay() + 1); // Go to next day
-        }
+    if (currentHour > 12) {
+        day = (new Date().getDay() + 1) % 7;
     } else {
-        day = new Date().getDay(); // Get current day
+        day = new Date().getDay();
     }
 
     day--;
 
-    if (config.sleepTime) return config.sleepTime[day];
+    return config.sleepTime ? config.sleepTime[day] : null;
 }
 
 // Sleep Time Update => Return true or false [Boolean]
-function currentlyAsleep() {
-    let sleepTimes = getSleepTimes();
+function isCurrentlyAsleep() {
+    const sleepTimes = getSleepTimes();
 
-    // User didn't set their sleep schedules
-    if (!sleepTimes) return false;
-
-    if (new Date().getHours() < sleepTimes[1] || new Date().getHours() >= sleepTimes[0]) {
-        return true; // Enable sleep mode
-    } else {
-        return false; // Disable sleep mode
+    if (!sleepTimes) {
+        return false;
     }
+
+    const currentHour = new Date().getHours();
+    return currentHour < sleepTimes[1] || currentHour >= sleepTimes[0];
 }
 
-// When Awake => Return when user is waking up [Date]
+// When Awake => Return when the user is waking up [Date]
 function awakeWhen() {
-    let time = new Date();
-    let awakeTime = new Date();
+    const time = new Date();
+    const awakeTime = new Date();
 
     if (time.getHours() > 12) {
-        awakeTime.setDate(awakeTime.getDate() + 1)
+        awakeTime.setDate(awakeTime.getDate() + 1);
     }
 
     awakeTime.setHours(getSleepTimes()[1], 0, 0, 0);
