@@ -64,7 +64,7 @@ function setActivity(activityConfig) {
         state: activityConfig.state || undefined,
         partySize: activityConfig.partySize || undefined,
         partyMax: activityConfig.partyMax || undefined,
-        startTimestamp: activityConfig.startTimestamp || undefined,
+        startTimestamp: activityConfig.startTimestamp && new Date().getTime() || undefined,
         endTimestamp: activityConfig.endTimestamp || undefined,
         largeImageKey: activityConfig.largeImageKey || undefined,
         largeImageText: activityConfig.largeImageText || undefined,
@@ -92,6 +92,7 @@ function setActivity(activityConfig) {
 }
 
 // Sleep Time => Return the current day [Number]
+/*
 function getSleepTimes() {
     let day = 0;
     const currentHour = new Date().getHours();
@@ -106,8 +107,10 @@ function getSleepTimes() {
 
     return config.sleepTime ? config.sleepTime[day] : null;
 }
+*/
 
 // Sleep Time Update => Return true or false [Boolean]
+/*
 function isCurrentlyAsleep() {
     const sleepTimes = getSleepTimes();
 
@@ -118,8 +121,10 @@ function isCurrentlyAsleep() {
     const currentHour = new Date().getHours();
     return currentHour < sleepTimes[1] || currentHour >= sleepTimes[0];
 }
+*/
 
 // When Awake => Return when the user is waking up [Date]
+/*
 function awakeWhen() {
     const time = new Date();
     const awakeTime = new Date();
@@ -131,3 +136,4 @@ function awakeWhen() {
     awakeTime.setHours(getSleepTimes()[1], 0, 0, 0);
     return awakeTime;
 }
+*/
