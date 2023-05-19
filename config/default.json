@@ -3,16 +3,16 @@
   "interval": 1000,
   "rpc": {
     "discord": {
-      "details": "Cute and Adorable",
-      "state": "Nya",
+      "details": "Princess of the Cat Kingdom",
+      "state": "Adorable cutie",
       "partySize": null,
       "partyMax": null,
       "startTimestamp": false,
       "endTimestamp": false,
-      "largeImageKey": "https://media.tenor.com/WM0vXcD40IcAAAAC/anime-bocchi.gif",
-      "largeImageText": "Nu nu nu",
-      "smallImageKey": "https://i.redd.it/nbjhon1dgg571.gif",
-      "smallImageText": "Nyaaaaa",
+      "largeImageKey": "https://i.imgur.com/cs2fnMD.gif",
+      "largeImageText": "Nyaaa",
+      "smallImageKey": "https://i.imgur.com/VlrH07z.gif",
+      "smallImageText": "Verified cutie",
       "joinButton": {
         "enabled": true,
         "label": "🤖 My Discord Bot",
