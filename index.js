@@ -32,7 +32,7 @@ function askForActivity() {
         {
           type: 'confirm',
           name: 'confirm',
-          message: 'Do you want to update the activity?'
+          message: 'Do you want to update the activity? If not, the program will exit. (ignore this message if you don\'t have made any changes)'
         },
       ])
       .then(answers => {
