@@ -63,34 +63,37 @@ function askForActivity() {
     });
 }
 
-const currentTime = new Date();
+//const currentTime = new Date();
 // Set activity => Set current activity for the user
-function setActivity(activityConfig) {
+function setActivity(config) {
   const activity = {
-    details: activityConfig.details || undefined,
-    state: activityConfig.state || undefined,
-    partySize: activityConfig.partySize || undefined,
-    partyMax: activityConfig.partyMax || undefined,
-    startTimestamp: currentTime.getTime(),
-    largeImageKey: activityConfig.largeImageKey || undefined,
-    largeImageText: activityConfig.largeImageText || undefined,
-    smallImageKey: activityConfig.smallImageKey || undefined,
-    smallImageText: activityConfig.smallImageText || undefined,
+    details: config.details || undefined,
+    state: config.state || undefined,
+    partySize: config.partySize || undefined,
+    partyMax: config.partyMax || undefined,
+    startTimestamp: config.startTimestamp
+      ? new Date().setHours(0, 0, 0, 0)
+      : undefined,
+    endTimestamp: config.endTimestamp ? new Date() : undefined,
+    largeImageKey: config.largeImageKey || undefined,
+    largeImageText: config.largeImageText || undefined,
+    smallImageKey: config.smallImageKey || undefined,
+    smallImageText: config.smallImageText || undefined,
     instance: false,
     buttons: [],
   };
 
-  if (activityConfig.joinButton.enabled) {
+  if (config.joinButton.enabled) {
     activity.buttons.push({
-      label: activityConfig.joinButton.label,
-      url: activityConfig.joinButton.url,
+      label: config.joinButton.label,
+      url: config.joinButton.url,
     });
   }
 
-  if (activityConfig.spectateButton.enabled) {
+  if (config.spectateButton.enabled) {
     activity.buttons.push({
-      label: activityConfig.spectateButton.label,
-      url: activityConfig.spectateButton.url,
+      label: config.spectateButton.label,
+      url: config.spectateButton.url,
     });
   }
 
