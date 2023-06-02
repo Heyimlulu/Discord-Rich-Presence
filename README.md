@@ -22,6 +22,8 @@ npm start
 
 You can also double click on `start.bat` to run this project in Windows CMD
 
+---
+
 ## Configuration
 
 ### General
@@ -30,9 +32,7 @@ You can also double click on `start.bat` to run this project in Windows CMD
 | :--------: | :-------------------------------------: | :----: |
 |   appid    |           The application ID            | number |
 
----
-
-### Discord
+### Parameters
 
 |   Parameters   |                       Description                        |  Type   |
 | :------------: | :------------------------------------------------------: | :-----: |
@@ -40,13 +40,12 @@ You can also double click on `start.bat` to run this project in Windows CMD
 |     state      |       The user's current state "I.E., In a group"        | string  |
 |   partySize    |             Current size of the user's party             | number  |
 |    partyMax    |             Maximum size of the user's party             | number  |
-| startTimestamp |              Epoch seconds for status start              | boolean |
 | largeImageKey  |             Name of the large image you want             | string  |
 | largeImageText | Text you want to show when hovering over the large image | string  |
 | smallImageKey  |             Name of the small image you want             | string  |
 | smallImageText | Text you want to show when hovering over the small image | string  |
-|   joinButton   |               Display primary button                     | boolean |
-| spectateButton |               Display secondary button                   | boolean |
+|   joinButton   |               Display primary button                     | object  |
+| spectateButton |               Display secondary button                   | object  |
 
 ### Buttons
 
@@ -70,6 +69,8 @@ You can also double click on `start.bat` to run this project in Windows CMD
 |    enabled     |                  Show or hide the button                 | boolean |
 |     label      |             Title to be shown on the button              | string  |
 |      url       |            Image key to art assets or direct URL         | string  |
+
+---
 
 ## Preview
 
